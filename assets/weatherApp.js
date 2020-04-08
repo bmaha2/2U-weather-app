@@ -4,6 +4,7 @@ $( document ).ready( () => {
     const domRefs = {
         cityNameInput: $( ".search-input" ),
         currentWeather: $( ".current-weather-area" ),
+        forecast: $( ".weather-forecast-area" ),
     };
 
     const SCHEDULE_DATA = "SCHEDULE_DATA";
@@ -49,6 +50,8 @@ $( document ).ready( () => {
     }
 
     function generateCurrentWeatherCard( { date, temp, humidity, uvi, icon, windSpeed } ) {
+        // taken out of play in favor of the template function templateCurrentWeatherCard
+
         const $card = $( "<div class='current-weather-card'>" )
 
         const $date = generateCardRow( "", date );
@@ -59,20 +62,32 @@ $( document ).ready( () => {
 
         $card.append( $date, $temp, $humidity, $windspeed, $uvIndex );
 
-        return $card;
+        return $card1;
+    }
+
+    function templateCurrentWeatherCard( { date, temp, humidity, uvi, icon, windSpeed } ) {
+        return `<div class="current-weather-card">
+            <div> <h2>${ date }</h2></div>
+            <div><h3>Temperature</h3><h5>${ temp } F</h5></div>
+            <div><h3>Humidity</h3><h5>${ humidity }%</h5></div>
+            <div><h3>Wind Speed</h3><h5>${ windSpeed } mph</h5></div>
+            <div><h3>UV Index</h3><h5>${ uvi }</h5></div>
+        </div>`
     }
 
     function generateCardRow( label, value ) {
-        const $row = $( "<div>" ).text( label );
+        const $row = $( "<div>" ).append( `<h3>${ label }</h5>` );
         const $value = $( "<span>" ).text( value );
         $row.append( $value );
         return $row;
     }
 
+
+
     function generateForecastCard( data ) {
-        const $img = $( "<img>" ).attr( "src", iconURL( data.iconURL ) );
-        const $temp = $( "<div>" ).text( data.temp );
-        const $humidity = $( "<div>" ).text( data.humidity );
+        const $img = $( "<img>" ).attr( "src", data.icon );
+        const $temp = $( "<div>" ).text( `${ data.temp } F` ).prepend( "<span>Temp: </span>" );
+        const $humidity = $( "<div>" ).text( data.humidity ).prepend( "<span>Humidity: </span>" );
 
         const $card = $( "<div class='forecast-card'>" );
         $card.append( $img, $temp, $humidity );
@@ -103,22 +118,31 @@ $( document ).ready( () => {
         fetchLatAndLon( cityName )
             .then( fetchWeatherData )
             .then( ( { current, daily } ) => {
-                const currentWeatherCard = generateCurrentWeatherCard( extractCurrentWeatherData( current ) )
-                updateCurrentWeather( currentWeatherCard )
+                const $currentWeatherCard = templateCurrentWeatherCard( extractCurrentWeatherData( current ) )
+                updateCurrentWeather( $currentWeatherCard )
 
                 console.log( daily )
-                extractForecastData( daily );
-
+                const $forecastCards = generateForecastCards( extractForecastData( daily ) );
+                updateForecast( $forecastCards );
             } )
             .catch( err => console.error( err ) );
     }
 
     function extractForecastData( dailyData ) {
         const fiveDays = [];
-        for ( let i=0; i < 5; i++) {
-            fiveDays.push( dailyData[i] );
+        for ( let i = 0; i < 5; i++ ) {
+            fiveDays.push( extractSingleDataForecastData( dailyData[ i ] ) );
         }
         return fiveDays;
+    }
+
+    function extractSingleDataForecastData( { dt, temp: { day }, humidity, weather: [ { icon } ] } ) {
+        return { date: moment.unix( dt ).format( DATE_FORMAT ), temp: day, humidity, icon: iconURL( icon ) }
+    }
+
+    function updateForecast( container ) {
+        domRefs.forecast.empty();
+        domRefs.forecast.append( container );
     }
 
     function updateCurrentWeather( card ) {
@@ -141,7 +165,7 @@ $( document ).ready( () => {
     }
 
     function extractCurrentWeatherData( { dt, temp, humidity, uvi, weather: [ { icon } ], wind_speed: windSpeed } ) {
-        return { date: moment.unix( dt ).format( DATE_FORMAT ), temp, humidity, uvi, icon, windSpeed }
+        return { date: moment.unix( dt ).format( DATE_FORMAT ), temp, humidity, uvi, icon: iconURL( icon ), windSpeed }
     }
 
     function latAndLonURL( cityName ) {
