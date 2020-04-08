@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- End JQuery  -->
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <!-- End Bootstrap  -->
+
+    <!-- MomentJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <!-- End MomentJS  -->
+
+    <!-- Weather Dashboard Script  -->
+    <script src="assets/weatherApp.js"></script>
+    <!-- End Weather Dashboard Script  -->
+
+    <!-- Weather Dashboard Stylesheet  -->
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- End Weather Dashboard Stylesheet  -->
+
+</head>
+
+<body>
+    <div id="weather-app" class="weather-grid">
+        <div class="search-area grid-area">
+            <!-- <div class="input-group"> -->
+            <input type="text" class="form-control search-input" placeholder="Recipient's username"
+                aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary search-btn" type="button">Search</button>
+            <!-- </div> -->
+
+
+        </div>
+        <div class="history-area grid-area">
+            <ul class="list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>
+        <div class="current-weather-area grid-area">
+            <div class="current-weather-card">
+                <div> <span class="current-date"></span></div>
+                <div>Temperature: <span class="current-temp"></span></div>
+                <div>Humidity: <span class="current-humidity"></span></div>
+                <div>Wind Speed: <span class="current-windspeed"></span></div>
+                <div>UV Index: <span class="current-uv-index"></span></div>
+            </div>
+
+
+
+        </div>
+        <div class="weather-forecast-area grid-area">
+            <div class="forecast-container">
+                <div class="forecast-card">
+                    <img src="">
+                    <div>Temp</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="forecast-card">
+                    <img src="">
+                    <div>Temp</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="forecast-card">
+                    <img src="">
+                    <div>Temp</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="forecast-card">
+                    <img src="">
+                    <div>Temp</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="forecast-card">
+                    <img src="">
+                    <div>Temp</div>
+                    <div>Humidity</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
