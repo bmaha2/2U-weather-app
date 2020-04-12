@@ -11,7 +11,8 @@
         "history current"
         "history forecast"
         "history forecast";
-    aajustify-items: stretch;
+    justify-items: stretch;
+    
 }
 
 .search-area, .forecast-container {
